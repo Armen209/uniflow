@@ -1,4 +1,6 @@
+
 import { NextResponse } from "next/server";
+import { unstable_rethrow } from "next/navigation";
 
 import { requireRole } from "@/lib/permissions";
 import { getProfessorStudents } from "@/lib/services/enrollment.service";
@@ -22,6 +24,8 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
+    unstable_rethrow(error);
+
     console.error("GET /api/professor/students error:", error);
 
     return NextResponse.json(

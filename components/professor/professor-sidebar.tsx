@@ -3,56 +3,143 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  BookOpen,
+  Users,
+  ClipboardList,
+  CalendarDays,
+  FolderOpen,
+  FileCheck,
+  GraduationCap,
+} from "lucide-react";
 
 const navigation = [
-  { label: "Dashboard", href: "/professor/dashboard" },
-  { label: "Courses", href: "/professor/courses" },
-  { label: "Students", href: "/professor/students" },
-  { label: "Assignments", href: "/professor/assignments" },
-  { label: "Schedule", href: "/professor/schedule" },
-  { label: "Materials", href: "/professor/materials" },
-  { label: "Submissions", href: "/professor/submissions" },
+  {
+    label: "Dashboard",
+    href: "/professor/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "Courses",
+    href: "/professor/courses",
+    icon: BookOpen,
+  },
+  {
+    label: "Students",
+    href: "/professor/students",
+    icon: Users,
+  },
+  {
+    label: "Assignments",
+    href: "/professor/assignments",
+    icon: ClipboardList,
+  },
+  {
+    label: "Schedule",
+    href: "/professor/schedule",
+    icon: CalendarDays,
+  },
+  {
+    label: "Materials",
+    href: "/professor/materials",
+    icon: FolderOpen,
+  },
+  {
+    label: "Submissions",
+    href: "/professor/submissions",
+    icon: FileCheck,
+  },
 ];
 
 export function ProfessorSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-64 shrink-0 flex-col bg-[#172554] text-white">
-      <div className="border-b border-white/10 px-6 py-6">
-        <h1 className="text-2xl font-bold tracking-tight">UniFlow</h1>
-        <p className="mt-1 text-xs text-blue-200">
-          University Management System
-        </p>
+    <aside className="flex min-h-screen w-64 shrink-0 flex-col bg-sidebar text-white">
+      <div className="border-b border-white/10 px-6 py-7">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
+            <GraduationCap size={23} />
+          </div>
+
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">
+              UniFlow
+            </h1>
+            <p className="mt-0.5 text-[11px] text-blue-200">
+              University Platform
+            </p>
+          </div>
+        </div>
       </div>
 
-      <nav className="flex-1 space-y-2 px-4 py-6">
-        <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-blue-300">
+      <nav className="flex-1 space-y-2 px-4 py-7">
+        <p className="mb-4 px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-300/70">
           Professor Menu
         </p>
 
-        {navigation.map((item) => {
-          const active = pathname === item.href;
+        {navigation.map((item, index) => {
+          const active =
+            pathname === item.href ||
+            pathname.startsWith(`${item.href}/`);
+
+          const Icon = item.icon;
 
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center rounded-lg px-3 py-3 text-sm font-medium transition ${
-                active
-                  ? "bg-white/15 text-white"
-                  : "text-blue-100 hover:bg-white/10"
-              }`}
-            >
-              {item.label}
-            </Link>
+            <div key={item.href}>
+              {index === 1 && (
+                <p className="mb-4 mt-8 px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-300/70">
+                  Academic
+                </p>
+              )}
+
+              <Link
+                href={item.href}
+                className={`group relative flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium transition-all duration-200 ${
+                  active
+                    ? "bg-white text-indigo-950 shadow-lg shadow-black/10"
+                    : "text-blue-100/80 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                <Icon
+                  size={18}
+                  strokeWidth={active ? 2.3 : 1.8}
+                  className={
+                    active
+                      ? "text-primary"
+                      : "text-blue-200/70 group-hover:text-white"
+                  }
+                />
+
+                <span>{item.label}</span>
+
+                {active && (
+                  <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />
+                )}
+              </Link>
+            </div>
           );
         })}
       </nav>
 
-      <div className="border-t border-white/10 px-6 py-5">
-        <p className="text-sm font-medium">Professor Portal</p>
-        <p className="mt-1 text-xs text-blue-200">UniFlow Account</p>
+      <div className="border-t border-white/10 p-5">
+        <div className="rounded-xl bg-white/10 p-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-400/20">
+              <GraduationCap size={18} />
+            </div>
+
+            <div>
+              <p className="text-xs font-semibold text-white">
+                Professor Portal
+              </p>
+              <p className="mt-1 text-[10px] text-blue-200">
+                UniFlow Account
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </aside>
   );

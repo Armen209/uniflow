@@ -3,6 +3,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuthStore } from "@/stores/auth-store";
 
 interface DashboardHeaderProps {
   title?: string;
@@ -16,6 +17,9 @@ export function DashboardHeader({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const user = useAuthStore((state) => state.user);
+  const clearUser = useAuthStore((state) => state.clearUser);
+
   async function handleLogout() {
     setLoading(true);
 
@@ -27,6 +31,8 @@ export function DashboardHeader({
       if (!response.ok) {
         throw new Error("Logout failed");
       }
+
+      clearUser();
 
       router.replace("/login");
       router.refresh();
@@ -44,13 +50,26 @@ export function DashboardHeader({
         <p className="text-sm text-muted">{subtitle}</p>
       </div>
 
-      <button
-        onClick={handleLogout}
-        disabled={loading}
-        className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:bg-background disabled:opacity-50"
-      >
-        {loading ? "Logging out..." : "Log out"}
-      </button>
+      <div className="flex items-center gap-5">
+        {user && (
+          <div className="hidden text-right sm:block">
+            <p className="text-sm font-semibold text-foreground">
+              {user.full_name}
+            </p>
+            <p className="text-xs text-muted">
+              {user.email}
+            </p>
+          </div>
+        )}
+
+        <button
+          onClick={handleLogout}
+          disabled={loading}
+          className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:bg-background disabled:opacity-50"
+        >
+          {loading ? "Logging out..." : "Log out"}
+        </button>
+      </div>
     </header>
   );
 }

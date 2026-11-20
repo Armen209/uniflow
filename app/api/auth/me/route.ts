@@ -1,5 +1,7 @@
 
 import { NextResponse } from "next/server";
+import { unstable_rethrow } from "next/navigation";
+
 import { getCurrentUser } from "@/lib/auth";
 
 export async function GET() {
@@ -27,6 +29,8 @@ export async function GET() {
       },
     });
   } catch (error) {
+    unstable_rethrow(error);
+
     console.error("Authentication error:", error);
 
     return NextResponse.json(

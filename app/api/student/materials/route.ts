@@ -1,4 +1,6 @@
+
 import { NextResponse } from "next/server";
+import { unstable_rethrow } from "next/navigation";
 
 import { requireRole } from "@/lib/permissions";
 import { getStudentMaterials } from "@/lib/services/material.service";
@@ -24,6 +26,8 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
+    unstable_rethrow(error);
+
     console.error("GET /api/student/materials error:", error);
 
     return NextResponse.json(
