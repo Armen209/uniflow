@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import { unstable_rethrow } from "next/navigation";
 import { requireRole } from "@/lib/permissions";
 import { getStudentClassSessions } from "@/lib/services/class-session.service";
 
@@ -22,7 +22,9 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
-    console.error("GET /api/student/schedule error:", error);
+  unstable_rethrow(error);
+
+  console.error("GET /api/student/schedule error:", error);
 
     return NextResponse.json(
       {

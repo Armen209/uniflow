@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/auth-store";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +15,7 @@ import { Input } from "@/components/ui/input";
 
 export function LoginForm() {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
   const [serverError, setServerError] = useState("");
 
   const {
@@ -33,6 +35,7 @@ export function LoginForm() {
 
     try {
       const user = await loginUser(values);
+      setUser(user);
 
       const dashboardRoutes = {
         student: "/student/dashboard",

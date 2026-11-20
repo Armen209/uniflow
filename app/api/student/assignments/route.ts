@@ -1,4 +1,6 @@
+
 import { NextResponse } from "next/server";
+import { unstable_rethrow } from "next/navigation";
 
 import { requireRole } from "@/lib/permissions";
 import { getStudentAssignments } from "@/lib/services/assignment.service";
@@ -25,6 +27,8 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
+    unstable_rethrow(error);
+
     console.error("GET /api/student/assignments error:", error);
 
     return NextResponse.json(

@@ -6,17 +6,17 @@
    ======================================== */
 
 :root {
-  /* Brand colors */
+  /* Brand */
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --primary-light: #eef2ff;
 
-  /* Layout colors */
+  /* Layout */
   --sidebar: #172554;
-  --background: #f8fafc;
+  --background: #f5f7fc;
   --surface: #ffffff;
 
-  /* Text colors */
+  /* Text */
   --foreground: #0f172a;
   --muted: #64748b;
 
@@ -26,7 +26,7 @@
   /* Accent */
   --accent: #818cf8;
 
-  /* Status colors */
+  /* Status */
   --success: #16a34a;
   --error: #dc2626;
   --warning: #d97706;
@@ -34,7 +34,6 @@
 }
 
 @theme inline {
-  /* Colors */
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
@@ -54,21 +53,24 @@
   --color-warning: var(--warning);
   --color-info: var(--info);
 
-  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Border radius */
-  --radius-card: 12px;
-  --radius-modal: 16px;
+  --radius-card: 14px;
+  --radius-modal: 18px;
 }
 
 /* ========================================
    Global styles
    ======================================== */
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -76,4 +78,44 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: #c7d2fe;
+  color: #312e81;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Subtle scrollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
